@@ -1,0 +1,20 @@
+{
+    "name": "esoftdream/notification",
+    "type": "esoftdream-module",
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "esoftdream/waone": "^1.0",
+        "codeigniter4/framework": "^4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Esoftdream\\Notification\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Toto",
+            "email": "totoprayogo1916@gmail.com"
+        }
+    ]
+}
