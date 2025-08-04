@@ -1,5 +1,7 @@
 {
     "name": "esoftdream/notification",
+    "description": "Notification Module for Esoftdream",
+    "license": "proprietary",
     "type": "esoftdream-module",
     "authors": [
         {
