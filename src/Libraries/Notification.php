@@ -31,9 +31,11 @@ class Notification
 
     public function __construct(BaseConnection $db, string $waoneUrl, string $waoneToken)
     {
-        $this->db = $db;
-        $this->waone_url = $waoneUrl;
+        $this->db          = $db;
+        $this->waone_url   = $waoneUrl;
         $this->waone_token = $waoneToken;
+
+        helper('number');
     }
 
     /**
