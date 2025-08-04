@@ -1,0 +1,13 @@
+# Gunakan LF untuk semua file teks secara default
+* text=auto eol=lf
+
+# Gunakan CRLF untuk file batch Windows
+*.bat text eol=crlf
+
+.dev export-ignore
+.editorconfig export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+.php-cs-fixer.dist.php export-ignore
+README.md export-ignore
+rector.php export-ignore
