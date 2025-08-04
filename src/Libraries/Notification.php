@@ -17,9 +17,9 @@ class Notification
      */
     private $db;
 
-    public function __construct()
+    public function __construct(BaseConnection $db)
     {
-        $this->db = Database::connect();
+        $this->db = $db;
     }
 
     /**
