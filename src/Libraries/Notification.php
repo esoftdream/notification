@@ -3,8 +3,6 @@
 namespace Esoftdream\Notification\Libraries;
 
 use CodeIgniter\Database\BaseConnection;
-use Config\Database;
-use Config\Services;
 use Esoftdream\WaOne\WaOne;
 use Exception;
 
@@ -17,22 +15,35 @@ class Notification
      */
     private $db;
 
-    public function __construct(BaseConnection $db)
+    /**
+     * WaOne URL
+     *
+     * @var string
+     */
+    private $waone_url;
+
+    /**
+     * WaOne Token
+     *
+     * @var string
+     */
+    private $waone_token;
+
+    public function __construct(BaseConnection $db, string $waoneUrl, string $waoneToken)
     {
         $this->db = $db;
+        $this->waone_url = $waoneUrl;
+        $this->waone_token = $waoneToken;
     }
 
     /**
-     * Send notification WhatsApp via Waone
+     * Send notification WhatsApp via WaOne
      *
      * @throws Exception Jika nomor telepon tidak valid
      */
     public function sendWaone(string $receiver, string $message)
     {
-        $waone_url   = Services::config()->get('waone.url');
-        $waone_token = Services::config()->get('waone.token');
-
-        $waone = new WaOne($waone_url, $waone_token);
+        $waone = new WaOne($this->waone_url, $this->waone_token);
 
         try {
             $receiver = format_mobilephone($receiver);
