@@ -16,5 +16,8 @@
             "name": "Toto",
             "email": "totoprayogo1916@gmail.com"
         }
-    ]
+    ],
+    "require-dev": {
+        "rector/rector": "^2.1"
+    }
 }
