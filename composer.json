@@ -18,6 +18,12 @@
         }
     ],
     "require-dev": {
-        "rector/rector": "^2.1"
+        "rector/rector": "^2.1",
+        "codeigniter/coding-standard": "^1.8"
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "@php -r \"if (file_exists('.dev/setup')) { require '.dev/setup'; }\""
+        ]
     }
 }

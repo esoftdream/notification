@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+// Membuat direktori .git/hooks jika belum ada
+if (!is_dir('.git/hooks')) {
+    mkdir('.git/hooks', 0777, true);
+}
+
+// Menyalin file .dev/pre-commit ke .git/hooks/pre-commit
+if (!copy('.dev/pre-commit', '.git/hooks/pre-commit')) {
+    echo "Gagal menyalin file .dev/pre-commit ke .git/hooks/pre-commit\n";
+    exit(1);
+}
+
+// Mengubah hak akses file .git/hooks/pre-commit agar dapat dieksekusi
+if (!chmod('.git/hooks/pre-commit', 0755)) {
+    echo "Gagal mengubah hak akses file .git/hooks/pre-commit\n";
+    exit(1);
+}
