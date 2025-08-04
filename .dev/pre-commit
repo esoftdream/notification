@@ -1,0 +1,24 @@
+#!/bin/sh
+
+STAGED_PHP_FILES=`git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\\\.php$`
+
+echo "Starting precommit..."
+
+if [ "$STAGED_PHP_FILES" != "" ]; then
+  echo "Linting PHP code..."
+  for FILE in $STAGED_PHP_FILES; do
+    if ! echo "$FILE" | grep -q "^app/Views/"; then
+      if [ -d /proc/cygdrive ]; then
+        ./vendor/bin/php-cs-fixer fix "$FILE"
+      else
+        php ./vendor/bin/php-cs-fixer fix "$FILE"
+		  fi
+
+      echo "Add file to stage changes"
+      git add "$FILE"
+
+    fi
+  done
+fi
+
+exit $?
