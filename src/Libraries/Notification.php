@@ -39,18 +39,40 @@ class Notification
     }
 
     /**
+     * Mengirim notifikasi WhatsApp ke penerima yang ditentukan.
+     *
+     * @param string $receiver Nomor telepon penerima dalam format internasional.
+     * @param string $message  Pesan yang akan dikirim.
+     * @param string $vendor   Vendor layanan pengiriman pesan, default 'waone'.
+     *
+     * @return mixed Respon dari pengiriman pesan melalui vendor yang dipilih.
+     *
+     * @throws Exception Jika vendor yang dipilih tidak didukung.
+     */
+    public function sendWhatsapp(string $receiver, string $message, string $vendor = 'waone')
+    {
+        switch ($vendor) {
+            case 'waone':
+                return $this->vendorWaone($receiver, $message);
+
+            default:
+                throw new Exception("Unsupported vendor: {$vendor}");
+        }
+    }
+
+    /**
      * Send notification WhatsApp via WaOne
      *
      * @throws Exception Jika nomor telepon tidak valid
      */
-    public function sendWaone(string $receiver, string $message)
+    private function vendorWaone(string $receiver, string $message)
     {
         $waone = new WaOne($this->waone_url, $this->waone_token);
 
         try {
             $receiver = format_mobilephone($receiver);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), $e->getCode());
         }
 
         $response = $waone->send($message, $receiver);
