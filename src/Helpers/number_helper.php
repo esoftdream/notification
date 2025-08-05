@@ -1,4 +1,5 @@
 <?php
+
 if (! function_exists('format_mobilephone')) {
     /**
      * Ubah nomor telepon ke format internasional.
@@ -31,6 +32,6 @@ if (! function_exists('format_mobilephone')) {
             return '+' . $nomor;
         }
 
-        throw new Exception('Nomor telepon tidak valid.');
+        throw new Exception('Nomor telepon tidak valid.', 400);
     }
 }
