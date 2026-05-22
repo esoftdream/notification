@@ -29,11 +29,14 @@ class Notification
      */
     private $waone_token;
 
-    public function __construct(BaseConnection $db, string $waoneUrl, string $waoneToken)
+    private $waone_session_key;
+
+    public function __construct(BaseConnection $db, string $waoneUrl, string $waoneToken, string $waoneSessionKey)
     {
         $this->db          = $db;
         $this->waone_url   = $waoneUrl;
         $this->waone_token = $waoneToken;
+        $this->waone_session_key = $waoneSessionKey;
 
         helper('number');
     }
@@ -67,7 +70,7 @@ class Notification
      */
     private function vendorWaone(string $receiver, string $message)
     {
-        $waone = new WaOne($this->waone_url, $this->waone_token);
+        $waone = new WaOne($this->waone_url, $this->waone_token, $this->waone_session_key);
 
         try {
             $receiver = format_mobilephone($receiver);
@@ -86,8 +89,8 @@ class Notification
             'notification_sender'   => '',
             'notification_receiver' => $receiver,
             'notification_response' => $response,
-            'notification_status'   => @$res->data->message_status == 'success' ? 'Terkirim' : 'Gagal',
-            'notification_datetime' => @$res->data->message_updated_datetime ? date('Y-m-d H:i:s', strtotime((string) $res->data->message_updated_datetime)) : date('Y-m-d H:i:s'),
+            'notification_status'   => @$res->meta->status == 'success' ? 'Terkirim' : 'Gagal',
+            'notification_datetime' => @$res->meta->message_updated_datetime ? date('Y-m-d H:i:s', strtotime((string) $res->data->message_updated_datetime)) : date('Y-m-d H:i:s'),
         ];
 
         $this->db->table('log_notification')->insert($log);
